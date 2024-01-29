@@ -1,0 +1,10 @@
+[01m[K/home/angli/lab1_ws/src/lab1_pkg/src/talker.cpp:[m[K In member function ‘[01m[Kvoid Talker::timer_callback()[m[K’:
+[01m[K/home/angli/lab1_ws/src/lab1_pkg/src/talker.cpp:41:40:[m[K [01;31m[Kerror: [m[K‘[01m[Kclass rclcpp::Parameter[m[K’ has no member named ‘[01m[Kas_float[m[K’
+   41 |     float v = this->get_parameter("v").[01;31m[Kas_float[m[K();
+      |                                        [01;31m[K^~~~~~~~[m[K
+[01m[K/home/angli/lab1_ws/src/lab1_pkg/src/talker.cpp:42:40:[m[K [01;31m[Kerror: [m[K‘[01m[Kclass rclcpp::Parameter[m[K’ has no member named ‘[01m[Kas_float[m[K’
+   42 |     float d = this->get_parameter("d").[01;31m[Kas_float[m[K();
+      |                                        [01;31m[K^~~~~~~~[m[K
+make[2]: *** [CMakeFiles/cpp_executable.dir/build.make:63: CMakeFiles/cpp_executable.dir/src/talker.cpp.o] Error 1
+make[1]: *** [CMakeFiles/Makefile2:78: CMakeFiles/cpp_executable.dir/all] Error 2
+make: *** [Makefile:141: all] Error 2

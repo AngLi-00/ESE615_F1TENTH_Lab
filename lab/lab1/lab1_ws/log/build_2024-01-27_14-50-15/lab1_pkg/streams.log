@@ -1,0 +1,40 @@
+[0.086s] Invoking command in '/home/angli/lab1_ws/build/lab1_pkg': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --build /home/angli/lab1_ws/build/lab1_pkg -- -j16 -l16
+[0.103s] -- Found ament_cmake: 0.9.12 (/opt/ros/foxy/share/ament_cmake/cmake)
+[0.116s] -- Using PYTHON_EXECUTABLE: /usr/bin/python3
+[0.215s] -- Found rclcpp: 2.4.3 (/opt/ros/foxy/share/rclcpp/cmake)
+[0.235s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.236s] -- Found rosidl_adapter: 1.3.1 (/opt/ros/foxy/share/rosidl_adapter/cmake)
+[0.319s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.347s] -- Found rmw_implementation_cmake: 1.0.4 (/opt/ros/foxy/share/rmw_implementation_cmake/cmake)
+[0.347s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[0.430s] -- Found rclpy: 1.0.13 (/opt/ros/foxy/share/rclpy/cmake)
+[0.430s] -- Found ackermann_msgs: 2.0.2 (/opt/ros/foxy/share/ackermann_msgs/cmake)
+[0.450s] -- Found ament_lint_auto: 0.9.8 (/opt/ros/foxy/share/ament_lint_auto/cmake)
+[0.488s] -- Added test 'copyright' to check source files copyright and LICENSE
+[0.488s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[0.488s] -- Configured cppcheck include dirs: /home/angli/lab1_ws/src/lab1_pkg/include
+[0.488s] -- Configured cppcheck exclude dirs and/or files: 
+[0.488s] -- Added test 'cpplint' to check C / C++ code against the Google style
+[0.488s] -- Configured cpplint exclude dirs and/or files: 
+[0.489s] -- Added test 'flake8' to check Python code syntax and style conventions
+[0.489s] -- Added test 'lint_cmake' to check CMake code style
+[0.489s] -- Added test 'pep257' to check Python code against some of the style conventions in PEP 257
+[0.489s] -- Added test 'uncrustify' to check C / C++ code style
+[0.489s] -- Configured uncrustify additional arguments: 
+[0.489s] -- Added test 'xmllint' to check XML markup files
+[0.491s] -- Configuring done
+[0.494s] -- Generating done
+[0.495s] -- Build files have been written to: /home/angli/lab1_ws/build/lab1_pkg
+[0.515s] [35m[1mScanning dependencies of target cpp_executable[0m
+[0.532s] [ 50%] [32mBuilding CXX object CMakeFiles/cpp_executable.dir/src/talker.cpp.o[0m
+[1.174s] [01m[K/home/angli/lab1_ws/src/lab1_pkg/src/talker.cpp:[m[K In member function ‘[01m[Kvoid Talker::timer_callback()[m[K’:
+[1.174s] [01m[K/home/angli/lab1_ws/src/lab1_pkg/src/talker.cpp:41:40:[m[K [01;31m[Kerror: [m[K‘[01m[Kclass rclcpp::Parameter[m[K’ has no member named ‘[01m[Kas_float[m[K’
+[1.174s]    41 |     float v = this->get_parameter("v").[01;31m[Kas_float[m[K();
+[1.174s]       |                                        [01;31m[K^~~~~~~~[m[K
+[1.174s] [01m[K/home/angli/lab1_ws/src/lab1_pkg/src/talker.cpp:42:40:[m[K [01;31m[Kerror: [m[K‘[01m[Kclass rclcpp::Parameter[m[K’ has no member named ‘[01m[Kas_float[m[K’
+[1.174s]    42 |     float d = this->get_parameter("d").[01;31m[Kas_float[m[K();
+[1.174s]       |                                        [01;31m[K^~~~~~~~[m[K
+[1.661s] make[2]: *** [CMakeFiles/cpp_executable.dir/build.make:63: CMakeFiles/cpp_executable.dir/src/talker.cpp.o] Error 1
+[1.661s] make[1]: *** [CMakeFiles/Makefile2:78: CMakeFiles/cpp_executable.dir/all] Error 2
+[1.662s] make: *** [Makefile:141: all] Error 2
+[1.663s] Invoked command in '/home/angli/lab1_ws/build/lab1_pkg' returned '2': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --build /home/angli/lab1_ws/build/lab1_pkg -- -j16 -l16

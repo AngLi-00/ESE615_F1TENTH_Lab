@@ -1,0 +1,4 @@
+Invoking command in '/home/angli/lab1_ws/build/lab1_pkg': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/angli/ros2_ws/install/py_pkg:/opt/ros/foxy /usr/bin/cmake --build /home/angli/lab1_ws/build/lab1_pkg -- -j16 -l16
+Invoked command in '/home/angli/lab1_ws/build/lab1_pkg' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/angli/ros2_ws/install/py_pkg:/opt/ros/foxy /usr/bin/cmake --build /home/angli/lab1_ws/build/lab1_pkg -- -j16 -l16
+Invoking command in '/home/angli/lab1_ws/build/lab1_pkg': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/angli/ros2_ws/install/py_pkg:/opt/ros/foxy /usr/bin/cmake --install /home/angli/lab1_ws/build/lab1_pkg
+Invoked command in '/home/angli/lab1_ws/build/lab1_pkg' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/angli/ros2_ws/install/py_pkg:/opt/ros/foxy /usr/bin/cmake --install /home/angli/lab1_ws/build/lab1_pkg
