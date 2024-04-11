@@ -21,6 +21,7 @@ from nav_msgs.msg import Odometry
 from tf_transformations import euler_from_quaternion
 from scipy.interpolate import splev, splprep
 from visualization_msgs.msg import Marker, MarkerArray
+import yaml
 
 @dataclass
 class mpc_config:
@@ -31,22 +32,22 @@ class mpc_config:
     # ---------------------------------------------------
     # TODO: you may need to tune the following matrices
     Rk: list = field(
-        default_factory=lambda: np.diag([0.01, 0.1])
+        default_factory=lambda: np.diag([0.01, 100.0]) # default [0.01, 100.0] # [0.01, 10.0] on real car
     )  # input cost matrix, penalty for inputs - [accel, steering_speed]
     Rdk: list = field(
-        default_factory=lambda: np.diag([0.01, 0.1])
+        default_factory=lambda: np.diag([0.01, 100.0]) # default [0.01, 100.0] # [0.01, 10.0] on real car
     )  # input difference cost matrix, penalty for change of inputs - [accel, steering_speed]
     Qk: list = field(
-        default_factory=lambda: np.diag([13.5, 13.5, 5.5, 13.0]) # [x, y, v, yaw]
+        default_factory=lambda: np.diag([13.5, 13.5, 5.5, 13.0]) # [x, y, v, yaw] [13.5, 13.5, 5.5, 13.0]
     )  # state error cost matrix, for the the next (T) prediction time steps [x, y, delta, v, yaw, yaw-rate, beta]
     Qfk: list = field(
-        default_factory=lambda: np.diag([13.5, 13.5, 5.5, 13.0])
+        default_factory=lambda: np.diag([13.5, 13.5, 5.5, 13.0]) # [x, y, v, yaw] [13.5, 13.5, 5.5, 13.0]
     )  # final state error matrix, penalty  for the final state constraints: [x, y, delta, v, yaw, yaw-rate, beta]
     # ---------------------------------------------------
 
     N_IND_SEARCH: int = 20  # Search index number
     DTK: float = 0.1  # time step [s] kinematic
-    dlk: float = 0.03  # dist step [m] kinematic
+    dlk: float = 0.12  # dist step [m] kinematic # default 0.03. Distance between waypoints
     LENGTH: float = 0.58  # Length of the vehicle [m]
     WIDTH: float = 0.31  # Width of the vehicle [m]
     WB: float = 0.33  # Wheelbase [m]
@@ -81,6 +82,11 @@ class MPC(Node):
     def __init__(self):
         super().__init__('mpc_node')
 
+        # config_path = '/home/angli/sim_ws/src/mpc/config/mpc_config.yaml'
+        config_path = '/home/nvidia/f1tenth_ws/src/mpc/config/mpc_config.yaml'
+        with open(config_path, 'r') as file:
+            config_file = yaml.safe_load(file)
+
         self.sim = True
         if not self.sim:
             odom_topic = 'pf/viz/inferred_pose'
@@ -100,9 +106,13 @@ class MPC(Node):
         # TODO: get waypoints here
         # folder_path = '/home/nvidia/f1tenth_ws/src/mpc/waypoints'
         folder_path = '/home/angli/sim_ws/src/mpc/waypoints'
-        filename = 'Modified_Points_2024-04-09_19-33.csv'
-        # filename = 'key_wp_0409_MPC.csv'
+        # filename = 'Modified_Points_2024-04-09_19-33.csv' #too many waypoints
+        # filename = 'Modified_Points_2024-04-10_14-16.csv' #too many waypoints
+        filename = 'Modified_Points_2024-04-11_17-05.csv'
         self.csv_file_path = os.path.join(folder_path, filename)
+
+        # self.csv_file_path = config_file.get('csv_file_path')
+
         waypoints = []
         with open(self.csv_file_path, mode='r') as csvfile:
             csv_reader = csv.reader(csvfile)
@@ -134,6 +144,7 @@ class MPC(Node):
         self.init_flag = 0
 
         self.prev_state = None
+        self.prev_speed_output = None
 
         # initialize MPC problem
         self.mpc_prob_init()
@@ -163,8 +174,12 @@ class MPC(Node):
 
         vehicle_state.yaw = yaw
 
-        if self.prev_state is not None:
-            vehicle_state.v = np.sqrt((vehicle_state.x - self.prev_state.x)**2 + (vehicle_state.y - self.prev_state.y)**2)/self.config.DTK
+        # if self.prev_state is not None:
+        #     vehicle_state.v = np.sqrt((vehicle_state.x - self.prev_state.x)**2 + (vehicle_state.y - self.prev_state.y)**2)/self.config.DTK
+
+        ### The method above assumes that we get perfect state, but there might be differnece between actual speed and the speed calculated from the waypoints
+        # Use last speed output as the current speed
+        vehicle_state.v = self.prev_speed_output if self.prev_speed_output is not None else 0.0
 
         # TODO: Calculate the next reference trajectory for the next T steps
         #       with current vehicle pose.
@@ -208,6 +223,7 @@ class MPC(Node):
         self.drive_pub.publish(drive_msg)
 
         self.prev_state = vehicle_state
+        self.prev_speed_output = speed_output
 
     def mpc_prob_init(self):
         """
@@ -651,7 +667,7 @@ class MPC(Node):
             marker.pose.position.y = ref_traj[1, i]
             marker.pose.position.z = 0.0
             marker_array.markers.append(marker)
-
+        print("ref_traj: ", ref_traj)
         self.viz_ref_traj_pub.publish(marker_array)
 
 def main(args=None):

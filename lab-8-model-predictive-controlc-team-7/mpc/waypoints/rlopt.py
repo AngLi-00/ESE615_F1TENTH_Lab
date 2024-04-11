@@ -89,13 +89,13 @@ if __name__ == '__main__':
 
     # # Evaluate the spline fits for 100 evenly spaced distance values
     # xi, yi = sp.interpolate.splev(np.linspace(0, 1, 500), tck)
-    points, vels = sample_spline_with_distance(x, y, .03)
+    points, vels = sample_spline_with_distance(x, y, .12)
     avg, min_dist, max_dist, distances = average_distance_between_points(points)
     # distances = distances[distances < 5]
     max_idx = np.argmax(distances)
     print(points[max_idx], " ", points[max_idx + 1])
 
-    idx = 1900
+    idx = 500
 
     plt.figure()
     plt.plot(np.arange(distances.shape[0]), distances)

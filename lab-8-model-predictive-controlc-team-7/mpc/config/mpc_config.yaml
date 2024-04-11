@@ -1,0 +1,4 @@
+# csv_file_path: '/home/angli/sim_ws/src/pure_pursuit/waypoints/race2_1.csv'
+csv_file_path: '/home/nvidia/f1tenth_ws/src/mpc/waypoints/Modified_Points_2024-04-09_19-33.csv'
+# csv_file_path: '/home/nvidia/f1tenth_ws/src/mpc/waypoints/Modified_Points_2024-04-10_14-16.csv'
+
