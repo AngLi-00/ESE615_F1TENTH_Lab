@@ -12,7 +12,7 @@ from scipy.linalg import block_diag
 from scipy.sparse import block_diag, csc_matrix, diags
 from sensor_msgs.msg import LaserScan
 # from utils import nearest_point
-# from .package_name import*
+from mpc.utils import nearest_point
 
 # TODO CHECK: include needed ROS msg type headers and libraries
 import csv
@@ -82,8 +82,8 @@ class MPC(Node):
     def __init__(self):
         super().__init__('mpc_node')
 
-        # config_path = '/home/angli/sim_ws/src/mpc/config/mpc_config.yaml'
-        config_path = '/home/nvidia/f1tenth_ws/src/mpc/config/mpc_config.yaml'
+        config_path = '/home/angli/sim_ws/src/mpc/config/mpc_config.yaml'
+        # config_path = '/home/nvidia/f1tenth_ws/src/mpc/config/mpc_config.yaml'
         with open(config_path, 'r') as file:
             config_file = yaml.safe_load(file)
 
@@ -667,7 +667,7 @@ class MPC(Node):
             marker.pose.position.y = ref_traj[1, i]
             marker.pose.position.z = 0.0
             marker_array.markers.append(marker)
-        print("ref_traj: ", ref_traj)
+        # print("ref_traj: ", ref_traj)
         self.viz_ref_traj_pub.publish(marker_array)
 
 def main(args=None):
